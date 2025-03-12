@@ -3,7 +3,7 @@ const cheerio = require("cheerio")
 
 const products = []
 
-async function getPriceByURL(URL) {
+async function getPriceByURL(URL, ID) {
 
     const response = await axios(URL)
     const html = response.data
@@ -11,13 +11,17 @@ async function getPriceByURL(URL) {
     const $ = cheerio.load(html)
 
     const title = $(".pwc-h3.col-h3.product-name.pwc-font--primary-extrabold.mb-0").text().trim()
-    // const brand = $(".col-12 .ct-pdp--brand.col-pdp--brand") // Não consegui implementar o brand.
+    const brand = $('.ct-pdp--brand.col-pdp--brand').text().trim() 
     const price = $(".value").attr('content')
-    const quantity = `${$(".ct-pdp--unit.col-pdp--unit").text().trim()}`
+    const quantity = $(".ct-pdp--unit.col-pdp--unit").text().trim()
 
-    console.log(brand)
-
-    return products.push({title, price, quantity})
+    return products.push({ ID, title, brand, price, quantity })
 }
 
-getPriceByURL('https://www.continente.pt/produto/farinha-de-trigo-fina-com-fermento-branca-de-neve-2004428.html')
+async function teste() {
+    await getPriceByURL('https://www.continente.pt/produto/farinha-de-trigo-fina-com-fermento-branca-de-neve-2004428.html', 80)
+
+    return console.log(products)
+}
+
+teste()
