@@ -3,19 +3,21 @@ const cheerio = require("cheerio")
 
 const products = []
 
-async function getPriceByURL(URL, ID) {
+async function getPriceByURL(URL, id) {
 
     const response = await axios(URL)
     const html = response.data
 
     const $ = cheerio.load(html)
 
-    const title = $(".pwc-h3.col-h3.product-name.pwc-font--primary-extrabold.mb-0").text().trim()
+    const name = $(".pwc-h3.col-h3.product-name.pwc-font--primary-extrabold.mb-0").text().trim()
     const brand = $('.ct-pdp--brand.col-pdp--brand').text().trim() 
     const price = $(".value").attr('content')
     const quantity = $(".ct-pdp--unit.col-pdp--unit").text().trim()
 
-    return products.push({ ID, title, brand, price, quantity })
+    const newProduct = { id, name, brand, price, quantity }
+
+    return products.push(newProduct)
 }
 
 async function teste() {
