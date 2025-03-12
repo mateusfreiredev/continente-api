@@ -20,10 +20,10 @@ async function getPriceByURL(URL, id) {
     return products.push(newProduct)
 }
 
-async function teste() {
+async function test() {
     await getPriceByURL('https://www.continente.pt/produto/farinha-de-trigo-fina-com-fermento-branca-de-neve-2004428.html', 80)
 
     return console.log(products)
 }
 
-teste()
+test()
